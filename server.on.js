@@ -24,12 +24,24 @@ server.listen(8081, function () {
 
 
 server.on('request', function (req, rep) {
+    var urls = req.url;
+    console.log(urls);
+    // 响应首页
+    if (urls == '/') {
+        rep.setHeader('Content-type', 'text/html;charset=utf-8'); //设置字符集，中文不会乱码
+        fs.readFile('./index.html', 'utf-8', function (err, data) {
+            //直接返回一个读出来的网页
+            rep.end(data);
+        })
+    } else {
+        //响应图片或其他静态资源
+        rep.setHeader('Content-type', 'text/html;charset=utf-8');
+        fs.readFile('.' + urls, function (err, data) {
+            rep.end(data);
+        })
 
-    console.log(req.method);
-    rep.setHeader('Content-type','text/html;charset=utf-8'); //设置字符集，中文不会乱码
-    fs.readFile('./index.html', 'utf-8', function (err, data) {
-        //直接返回一个读出来的网页
-        rep.end(data);
-    })
-                                   
+    }
 });
+
+// 注意返回的网页会有图片的话，每一张图片会单独再发送一个请求，网页图标ico也会发一个请求
+// 请求的资源地址不一样，地址存在req.url里面 所以价格判断，根据请求的地址不一样，返回不同的资源

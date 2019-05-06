@@ -1,0 +1,10 @@
+添加到暂存区
+git add .
+git commit -m "备注修改了什么"
+上传到远程仓库
+git push -u origin master
+要是本地没有连接到远程仓库就
+git remote add 名字（自定义，作为上传时 -u 后的名字）地址
+git pull 更新本地项目 别的电脑或者别的人改变了本项目的远程仓库代码，这个命令可以把本地的代码，更新和远程仓库的代码一样
+
+git remote -v //查看当地连接的所有远程仓库
